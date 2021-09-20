@@ -1,7 +1,7 @@
 # OpenCV_Project
- 9/2021 Open CV Project to demonstrate understanding
+ 9/2021 Open CV Project to demonstrate understanding of OpenCV textbook
 
-
+## Description
 Animation with superhero --> rotates, gets bigger, add wings with bitwise operation, crop so that no background 
 tell story with images
 Use histogram as measure of color or power??? 
@@ -17,3 +17,24 @@ Counting bad guys or fire balls
 8. Show fireballs into color channel images
 9. monster turns into canny noodle drawing
 10. Draw happy face!
+
+
+## Chapter Roadmap
+3. Loading, Displaying, and Saving -- DONE
+4. Image Basics (Accessing and Manipulating Pixels) -- DONE
+5. Drawing (Lines, Rectangles, Circles)
+6. Image Processing (Transformations, Arithmetic, Bitwise Operations, Masking, Splitting & Merging Channels, Color Spaces) 
+7. Histograms (Grayscale, Color, Equalization, with Masks)
+8. Smoothing & Blurring (Averaging, Gaussian, Median, Bilateral)
+9. Thresholding (Simple, Adaptive, Otsu and Riddler-Calvard) -- DONE
+10. Gradients & Edge Detection (Laplacian and Sobel, Canny Edge Detector)
+11. Countours (Counting Coins, Contours)
+
+
+## Usage
+
+
+
+## Roadmap
+
+
