@@ -23,7 +23,7 @@ Counting bad guys or fire balls
 3. Loading, Displaying, and Saving -- DONE
 4. Image Basics (Accessing and Manipulating Pixels) -- DONE
 5. Drawing (Lines, Rectangles, Circles)
-6. Image Processing (Transformations, Arithmetic, Bitwise Operations, Masking, Splitting & Merging Channels, Color Spaces) 
+6. Image Processing (Transformations, Arithmetic, Bitwise Operations, Masking, Splitting & Merging Channels, Color Spaces) -- DONE
 7. Histograms (Grayscale, Color, Equalization, with Masks)
 8. Smoothing & Blurring (Averaging, Gaussian, Median, Bilateral)
 9. Thresholding (Simple, Adaptive, Otsu and Riddler-Calvard) -- DONE
