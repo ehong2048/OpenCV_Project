@@ -118,16 +118,29 @@ cv2.imshow("Character with Wings!", canvas)
 cv2.waitKey(0)
 
 
-for i in range(80):
-    if i % 5 == 0:
-        shifted_img = imutils.translate(canvas, np.random.random_integers(-20, 20), np.random.random_integers(-10, 0))
-        cv2.imshow("Shifted Character", shifted_img)
-        cv2.waitKey(1)
-    
-    shifted_img = imutils.translate(canvas, 0, -4*i)
-    cv2.imshow("Shifted Character", shifted_img)
+for i in range(80): 
+    canvas = imutils.translate(canvas, np.random.random_integers(-2, 2), np.random.random_integers(2, 10))
+    cv2.imshow("Shifted Character", canvas)
     cv2.waitKey(1)
 
+    """
+    for x in range(width):
+        for y in range(width):
+                (wb, wg, wr) = resized_wings[y, x]
+                if wb != 0 and wg != 0 and wr != 0: # if the pixel is on
+                    canvas[500 + y*i, 300 + x*i] = resized_wings[y, x] 
+                
+                (cb, cg, cr) = resized_char[y, x]
+                if cb != 0 and cg != 0 and cr != 0: # if the pixel is on
+                    canvas[500 + y, 300 + x] = resized_char[y, x] # overlays pixel in groot's image on pixel in wing's image 
+    cv2.imshow("Shifted Character!", canvas)
+    cv2.waitKey(0)
+    """
+
+
+
+# have background move down
+# can also switch between closed and open wings
 
 
 cv2.waitKey(0)
