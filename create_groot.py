@@ -112,7 +112,7 @@ for i in range(100): # draws 100 stars
     rand_x = np.random.randint(0, win_size)
     rand_y = np.random.randint(0, win_size)
     rand_r = np.random.randint(0, 4)
-    
+
     star_center = (rand_x, rand_y)
     cv2.circle(canvas, star_center, rand_r, (255,255,255), -1)
 
@@ -145,38 +145,41 @@ cv2.imshow("Landscape Background!", canvas)
 
 
 
-"""
+
 for x in range(width):
    for y in range(width):
         (wb, wg, wr) = resized_wings[y, x]
         if wb != 0 and wg != 0 and wr != 0: # if the pixel is on
-            canvas[500 + y, 300 + x] = resized_wings[y, x] 
+            canvas[600 + y, 300 + x] = resized_wings[y, x] 
         
         (cb, cg, cr) = resized_char[y, x]
         if cb != 0 and cg != 0 and cr != 0: # if the pixel is on
-            canvas[500 + y, 300 + x] = resized_char[y, x] # overlays pixel in groot's image on pixel in wing's image 
+            canvas[600 + y, 300 + x] = resized_char[y, x] # overlays pixel in groot's image on pixel in wing's image 
 cv2.imshow("Character with Wings!", canvas)
 cv2.waitKey(0)
 
-
+"""
 for i in range(80): 
     canvas = imutils.translate(canvas, np.random.random_integers(-2, 2), np.random.random_integers(2, 10))
     cv2.imshow("Shifted Character", canvas)
     cv2.waitKey(1)
+"""
 
+for i in range(7): 
+    canvas = imutils.translate(canvas, np.random.random_integers(-5, 5), np.random.random_integers(-5, 5))
 
     for x in range(width):
         for y in range(width):
                 (wb, wg, wr) = resized_wings[y, x]
                 if wb != 0 and wg != 0 and wr != 0: # if the pixel is on
-                    canvas[500 + y, 300 + x] = resized_wings[y, x] 
+                    canvas[600 + y - 20*i, 300 + x] = resized_wings[y, x] 
                 
                 (cb, cg, cr) = resized_char[y, x]
                 if cb != 0 and cg != 0 and cr != 0: # if the pixel is on
-                    canvas[500 + y, 300 + x] = resized_char[y, x] # overlays pixel in groot's image on pixel in wing's image 
+                    canvas[600 + y - 20*i, 300 + x] = resized_char[y, x] # overlays pixel in groot's image on pixel in wing's image 
     cv2.imshow("Shifted Character!", canvas)
     cv2.waitKey(1)
-"""
+
 
 
 
