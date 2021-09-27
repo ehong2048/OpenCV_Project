@@ -292,7 +292,8 @@ def falling_fireballs(canvas, num = int, fireball = np, win_size = int):
 
         shake_city(canvas, 7) # shakes city 7 times for each fireball
         cv2.waitKey(500)
-        
+    
+    cv2.waitKey(0)
     return
 
 
