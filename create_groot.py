@@ -43,12 +43,12 @@ parser.add_argument("--character", required = True, help = "string with name of 
 args = vars(parser.parse_args())
 
 if args["character"] == "groot":
-    char_path = "images/groot.jpeg"
+    char_path = "images/groot.png"
     thresh_val = 250
     use_inv = True
 elif args["character"] == "hulk":
-    char_path = "images/hulk.jpeg"
-    thresh_val = 250
+    char_path = "images/hulk.png"
+    thresh_val = 240
     use_inv = True
 elif args["character"] == "perry":
     char_path = "images/perry.png"
@@ -75,33 +75,61 @@ char_width = char.shape[1]
 char_height = char.shape[0]
 print(f'Character Width: {char_width}, Character Height: {char_height}')
 
-wings_path = "/Users/emma/Documents/GitHub/openCV_project/OpenCV_Project/images/groot_wings.jpeg"
-wings = cv2.imread(wings_path)
-cv2.imshow("Original Wings!", wings)
-wings = crop_image(wings, 254, True)
-cv2.imshow("Cropped Wings!", wings)
+close_wings_path = "images/closed_wings.png"
+closed_wings = cv2.imread(close_wings_path)
+cv2.imshow("Original Wings!", closed_wings)
+closed_wings = crop_image(closed_wings, 60, False)
+cv2.imshow("Cropped Closed Wings!", closed_wings)
 cv2.waitKey(0)
 
-w_width = wings.shape[1]
-w_height = wings.shape[0]
-print(f'Original Wings Width: {w_width}, Original Wings Height: {w_height}')
+open_wings_path = "images/open_wings.png"
+open_wings = cv2.imread(open_wings_path)
+cv2.imshow("Original Open Wings!", open_wings)
+open_wings = crop_image(open_wings, 120, False)
+cv2.imshow("Cropped Open Wings!", open_wings)
+cv2.waitKey(0)
+
+cw_width = closed_wings.shape[1]
+cw_height = closed_wings.shape[0]
+print(f'Original Closed Wings Width: {cw_width}, Original Closed Wings Height: {cw_width}')
+
+ow_width = open_wings.shape[1]
+ow_height = open_wings.shape[0]
+print(f'Original Closed Wings Width: {ow_width}, Original Closed Wings Height: {ow_width}')
 
 # CH. 6 Image Transformations - Resizes wings and character to 400 by 400
 # This is so that overlaying char over wings is easier and fits better, and also fits in canvas later for every character
-width = 400
+width = 400 
 
-r = width/w_width
-dim = (width, int(w_height * r))
-resized_wings = cv2.resize(wings, dim, interpolation = cv2.INTER_AREA)
-cv2.imshow("Resized Wings!", resized_wings)
+r = width/cw_width
+dim = (width, int(cw_height * r))
+resized_cwings = cv2.resize(closed_wings, dim, interpolation = cv2.INTER_AREA)
+cv2.imshow("Resized Closed Wings!", resized_cwings)
+cv2.waitKey(0)
+
+r = width/ow_width
+dim = (width, int(ow_height * r))
+resized_owings = cv2.resize(open_wings, dim, interpolation = cv2.INTER_AREA)
+cv2.imshow("Resized Open Wings!", resized_owings)
+cv2.waitKey(0)
+
 
 r = width/char_width
 dim = (width, int(char_height * r))
 resized_char = cv2.resize(char, dim, interpolation = cv2.INTER_AREA)
 cv2.imshow("Resized Char!", resized_char)
-
 cv2.waitKey(0)
 
+# draws character with closed wings and character with open wings by overlaying character on top of image
+for x in range(width):
+    for y in range(width):
+        (cb, cg, cr) = resized_char[y, x]
+        if cb != 0 and cg != 0 and cr != 0: # if the pixel is on
+            resized_cwings[y, x] = resized_char[y, x] 
+            resized_owings[y, x] = resized_char[y, x]       
+cv2.imshow("Character with Closed Wings!", resized_cwings)
+cv2.imshow("Character with Open Wings!", resized_owings)
+cv2.waitKey(0)
 
 # CH. 5 Drawing - Rectangle buildings in canvas, line telephone wires, and circle stars
 win_size = 1000
@@ -145,46 +173,24 @@ cv2.imshow("Landscape Background!", canvas)
 
 
 
-
-for x in range(width):
-   for y in range(width):
-        (wb, wg, wr) = resized_wings[y, x]
-        if wb != 0 and wg != 0 and wr != 0: # if the pixel is on
-            canvas[600 + y, 300 + x] = resized_wings[y, x] 
-        
-        (cb, cg, cr) = resized_char[y, x]
-        if cb != 0 and cg != 0 and cr != 0: # if the pixel is on
-            canvas[600 + y, 300 + x] = resized_char[y, x] # overlays pixel in groot's image on pixel in wing's image 
-cv2.imshow("Character with Wings!", canvas)
-cv2.waitKey(0)
-
-"""
-for i in range(80): 
-    canvas = imutils.translate(canvas, np.random.random_integers(-2, 2), np.random.random_integers(2, 10))
-    cv2.imshow("Shifted Character", canvas)
-    cv2.waitKey(1)
-"""
-
-for i in range(7): 
-    canvas = imutils.translate(canvas, np.random.random_integers(-5, 5), np.random.random_integers(-5, 5))
-
+for i in range(12): 
+    new_canvas = imutils.translate(canvas, np.random.random_integers(-5, 5), np.random.random_integers(-5, 5))
+    rand_shift = np.random.random_integers(-100, 100)
     for x in range(width):
         for y in range(width):
-                (wb, wg, wr) = resized_wings[y, x]
-                if wb != 0 and wg != 0 and wr != 0: # if the pixel is on
-                    canvas[600 + y - 20*i, 300 + x] = resized_wings[y, x] 
+                if i%2 == 0:
+                    (wb, wg, wr) = resized_cwings[y, x]
+                    if wb != 0 and wg != 0 and wr != 0: # if the pixel is on
+                        new_canvas[600 + y - 60*i, 300 + x + rand_shift] = resized_cwings[y, x] 
+                else:
+                    (wb, wg, wr) = resized_owings[y, x]
+                    if wb != 0 and wg != 0 and wr != 0: # if the pixel is on
+                        new_canvas[600 + y - 60*i, 300 + x + rand_shift] = resized_owings[y, x]
                 
-                (cb, cg, cr) = resized_char[y, x]
-                if cb != 0 and cg != 0 and cr != 0: # if the pixel is on
-                    canvas[600 + y - 20*i, 300 + x] = resized_char[y, x] # overlays pixel in groot's image on pixel in wing's image 
-    cv2.imshow("Shifted Character!", canvas)
+    cv2.imshow("Shifted Character!", new_canvas)
     cv2.waitKey(1)
 
 
-
-
-# have background move down
-# can also switch between closed and open wings
 
 
 cv2.waitKey(0)
