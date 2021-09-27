@@ -173,9 +173,9 @@ cv2.imshow("Landscape Background!", canvas)
 
 
 
-for i in range(12): 
-    new_canvas = imutils.translate(canvas, np.random.random_integers(-5, 5), np.random.random_integers(-5, 5))
-    rand_shift = np.random.random_integers(-100, 100)
+for i in range(8): 
+    new_canvas = imutils.translate(canvas, np.random.randint(-5, 6), np.random.randint(-5, 6))
+    rand_shift = np.random.randint(-100, 101)
     for x in range(width):
         for y in range(width):
                 if i%2 == 0:
@@ -190,6 +190,16 @@ for i in range(12):
     cv2.imshow("Shifted Character!", new_canvas)
     cv2.waitKey(1)
 
+fireball_path = "images/fireball.jpeg"
+fireball = cv2.imread(fireball_path)
+fireball = crop_image(fireball, 254, True)
+cv2.imshow("Fireball!", fireball)
+cv2.waitKey(0)
+
+dim = (int(win_size/5), int(win_size/5))
+fireball = cv2.resize(fireball, dim, interpolation = cv2.INTER_AREA)
+cv2.imshow("Fireball!", fireball)
+    
 
 
 
