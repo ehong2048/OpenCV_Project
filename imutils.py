@@ -25,11 +25,11 @@ def resize(img, width = None, height = None, inter = cv2.INTER_AREA):
     
     if width is not None:
         r = width/float(w) #new width divided by old width of image
-        dim = (width, int(h * r)) #new image dimensions is 150 by corresponding new resized height
+        dim = (width, int(h * r))
 
     else:
         r = height/float(h) #new height divided by old height of image
-        dim = (int(w * r), height) #new image dimensions is 150 by corresponding new resized width
+        dim = (int(w * r), height)
     
     resized_img = cv2.resize(img, dim, interpolation = inter)
 
