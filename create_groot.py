@@ -198,8 +198,24 @@ cv2.waitKey(0)
 
 dim = (int(win_size/5), int(win_size/5))
 fireball = cv2.resize(fireball, dim, interpolation = cv2.INTER_AREA)
+f_width = fireball.shape[1]
+f_height = fireball.shape[0]
 cv2.imshow("Fireball!", fireball)
+
+for i in range(200): # 10 fireballs fall down
+    new_canvas = imutils.translate(new_canvas, np.random.randint(-20, 21), np.random.randint(-20, 21))
     
+    x_pos = np.random.randint(f_width, win_size - f_width)
+    y_pos = np.random.randint(f_height, win_size - f_height)
+    
+    for x in range(f_width):
+        for y in range(f_height):
+            (fb, fg, fr) = fireball[y, x]
+            if fb != 0 and fg != 0 and fr != 0: # if the pixel is on
+                new_canvas[y_pos + y, x_pos + x] = fireball[y, x]   
+
+    cv2.imshow("Falling Fireballs!", new_canvas)
+  
 
 
 
