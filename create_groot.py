@@ -103,8 +103,49 @@ cv2.imshow("Resized Char!", resized_char)
 cv2.waitKey(0)
 
 
-# CH. 4 Image Basics - Accessing and manipulating pixels
-canvas = np.full((1000,1000,3), [0, 0, 0], dtype = "uint8") # creates empty canvas for character to "move" in
+# CH. 5 Drawing - Rectangle buildings in canvas, line telephone wires, and circle stars
+win_size = 1000
+canvas = np.full((win_size, win_size,3), [40, 5, 5], dtype = "uint8") # creates dark sky canvas for character to "move" in
+
+for i in range(100): # draws 100 stars
+    # initializes random position and size for the star
+    rand_x = np.random.randint(0, win_size)
+    rand_y = np.random.randint(0, win_size)
+    rand_r = np.random.randint(0, 4)
+    
+    star_center = (rand_x, rand_y)
+    cv2.circle(canvas, star_center, rand_r, (255,255,255), -1)
+
+
+for i in range(30): # draws 30 buildings for the landscape
+    # randomizes building's width, height, and color
+    rand_bwidth = np.random.randint(win_size/15, high = win_size/8)
+    rand_bheight = np.random.randint(win_size * 1/3, high = win_size * 3/4)
+    rand_bpos = np.random.randint(0, win_size)
+    rand_color = np.random.randint(20, 50)
+
+    gray_color = (rand_color, rand_color, rand_color)
+    bottom_left = (rand_bpos, win_size)
+    top_right = (rand_bpos + rand_bwidth, win_size - rand_bheight)
+
+    if top_right[0] < win_size and bottom_left[0] >= 0: # condition to make sure pixel index is not out of range
+        cv2.rectangle(canvas, bottom_left, top_right, gray_color, -1) #draws building!
+
+     # draws a telephone line layered between buildings
+    if i % 4 == 0: # use mod so that only draws teleophone line after every 4 buildings
+        black = (0,0,0)
+        rand_y1 = np.random.randint(win_size*2/5, win_size*9/10)
+        rand_y2 = np.random.randint(win_size*2/5, win_size*9/10)
+        rand_thickness = np.random.randint(2, 4)
+
+        line = cv2.line(canvas, (0, rand_y1), (win_size, rand_y2), black, rand_thickness)
+
+
+cv2.imshow("Landscape Background!", canvas)
+
+
+
+"""
 for x in range(width):
    for y in range(width):
         (wb, wg, wr) = resized_wings[y, x]
@@ -123,19 +164,19 @@ for i in range(80):
     cv2.imshow("Shifted Character", canvas)
     cv2.waitKey(1)
 
-    """
+
     for x in range(width):
         for y in range(width):
                 (wb, wg, wr) = resized_wings[y, x]
                 if wb != 0 and wg != 0 and wr != 0: # if the pixel is on
-                    canvas[500 + y*i, 300 + x*i] = resized_wings[y, x] 
+                    canvas[500 + y, 300 + x] = resized_wings[y, x] 
                 
                 (cb, cg, cr) = resized_char[y, x]
                 if cb != 0 and cg != 0 and cr != 0: # if the pixel is on
                     canvas[500 + y, 300 + x] = resized_char[y, x] # overlays pixel in groot's image on pixel in wing's image 
     cv2.imshow("Shifted Character!", canvas)
-    cv2.waitKey(0)
-    """
+    cv2.waitKey(1)
+"""
 
 
 
