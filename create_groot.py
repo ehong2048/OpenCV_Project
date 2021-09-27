@@ -189,6 +189,7 @@ for i in range(8):
                 
     cv2.imshow("Shifted Character!", new_canvas)
     cv2.waitKey(1)
+cv2.waitKey(0)
 
 fireball_path = "images/fireball.jpeg"
 fireball = cv2.imread(fireball_path)
@@ -202,9 +203,8 @@ f_width = fireball.shape[1]
 f_height = fireball.shape[0]
 cv2.imshow("Fireball!", fireball)
 
-for i in range(200): # 10 fireballs fall down
-    new_canvas = imutils.translate(new_canvas, np.random.randint(-20, 21), np.random.randint(-20, 21))
-    
+for i in range(10): # 15 fireballs fall down on city
+
     x_pos = np.random.randint(f_width, win_size - f_width)
     y_pos = np.random.randint(f_height, win_size - f_height)
     
@@ -215,8 +215,26 @@ for i in range(200): # 10 fireballs fall down
                 new_canvas[y_pos + y, x_pos + x] = fireball[y, x]   
 
     cv2.imshow("Falling Fireballs!", new_canvas)
-  
 
+    for j in range(7):
+        new_canvas = imutils.translate(new_canvas, np.random.randint(-10, 11), np.random.randint(-10, 11))
+        cv2.imshow("Shaking City!", new_canvas)
+        print(str(j) + "Shook the City")
+        cv2.waitKey(100)
+        print(j)
 
+    cv2.waitKey(500)
+
+sobelX = cv2.Sobel(new_canvas, cv2.CV_64F, 1, 0)
+sobelY = cv2.Sobel(new_canvas, cv2.CV_64F, 0, 1)
+sobelX = np.uint8(np.absolute(sobelX))
+sobelY = np.uint8(np.absolute(sobelY))
+sobelCombined = cv2.bitwise_or(sobelX, sobelY)
+cv2.imshow("Destructed City :(", sobelCombined)
+cv2.waitKey(0)
+
+(B,G,R) = cv2.split(sobelCombined)
+zeros = np.zeros(new_canvas.shape[:2], dtype = "uint8")
+cv2.imshow("City on Fireeee", cv2.merge([zeros, zeros, R]))
 
 cv2.waitKey(0)
